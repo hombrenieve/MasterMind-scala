@@ -1,7 +1,6 @@
-object GameConstants {
+object Game {
   val DIMENSION = 4
   val MAX_TURN = 10
-  val COLORS = List("RED", "BLUE", "GREEN", "PINK", "YELLOW")
 }
 
 
@@ -11,11 +10,11 @@ class Game(secret: SecretCombination, combinations: List[ProposedCombination]) {
   val proposedCombinations = combinations
 
   def isWinner = result match {
-    case (_, whites) => whites == GameConstants.DIMENSION
+    case (_, whites) => whites == Game.DIMENSION
     case _ => false
   }
 
-  def isLost = this.turn == GameConstants.MAX_TURN
+  def isLost = this.turn == Game.MAX_TURN
 
   def turn = combinations.size
 

@@ -1,4 +1,4 @@
-class ProposedCombination(combination: List[String]) {
+class ProposedCombination(combination: List[Color.Color]) {
 
   private val combination_ = combination
 
