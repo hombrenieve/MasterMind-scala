@@ -1,15 +1,25 @@
-class Game(secret: SecretCombination, combinations: List[ProposedCombination], dimension: Int = 4, maxTurn: Int = 10) {
+object GameConstants {
+  val DIMENSION = 4
+  val MAX_TURN = 10
+  val COLORS = List("RED", "BLUE", "GREEN", "PINK", "YELLOW")
+}
+
+
+class Game(secret: SecretCombination, combinations: List[ProposedCombination]) {
 
   private val result = combinations.head.getResult(secret)
+  val proposedCombinations = combinations
 
-  val blacks = this.result.blacks
-  val whites = this.result.whites
+  def isWinner = result match {
+    case (_, whites) => whites == GameConstants.DIMENSION
+    case _ => false
+  }
 
-  def isWinner = this.result.isWinner
-  def isLost = this.turn == maxTurn
+  def isLost = this.turn == GameConstants.MAX_TURN
 
   def turn = combinations.size
 
-  //def propose(proposal: ProposedCombination): Game =
+  def propose(proposal: ProposedCombination): Game =
+    new Game(secret, proposal :: combinations)
 
 }
