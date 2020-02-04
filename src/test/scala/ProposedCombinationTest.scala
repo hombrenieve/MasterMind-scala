@@ -42,4 +42,28 @@ class ProposedCombinationTest extends FunSuite {
       }
     )
   }
+
+  test("Calculate whites no white") {
+    val proposal = new ProposedCombination(List(Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE))
+    val secret = new SecretCombination(List(Color.RED, Color.RED, Color.RED, Color.RED))
+    assert(
+      proposal.calculateWhites(secret) == 0
+    )
+  }
+
+  test("Calculate whites all white") {
+    val proposal = new ProposedCombination(List(Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE))
+    val secret = new SecretCombination(List(Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE))
+    assert(
+      proposal.calculateWhites(secret) == 4
+    )
+  }
+
+  test("Calculate whites several white") {
+    val proposal = new ProposedCombination(List(Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE))
+    val secret = new SecretCombination(List(Color.BLUE, Color.RED, Color.BLUE, Color.RED))
+    assert(
+      proposal.calculateWhites(secret) == 2
+    )
+  }
 }
