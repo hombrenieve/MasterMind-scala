@@ -6,9 +6,7 @@ class ProposedCombinationTest extends FunSuite {
     val proposal = new ProposedCombination(List(Color.RED, Color.RED, Color.GREEN, Color.BLUE))
     val secret = new SecretCombination(List(Color.RED, Color.RED, Color.PINK, Color.PINK))
     assert(
-      proposal.getResult(secret) match {
-        case (blacks, whites) => blacks == 2 && whites == 0
-      }
+      proposal.getResult(secret) == (2, 0)
     )
   }
 
@@ -16,9 +14,7 @@ class ProposedCombinationTest extends FunSuite {
     val proposal = new ProposedCombination(List(Color.RED, Color.RED, Color.RED, Color.RED))
     val secret = new SecretCombination(List(Color.RED, Color.RED, Color.RED, Color.RED))
     assert(
-      proposal.getResult(secret) match {
-        case (blacks, whites) => blacks == 4 && whites == 0
-      }
+      proposal.getResult(secret) == (4, 0)
     )
   }
 
@@ -26,9 +22,7 @@ class ProposedCombinationTest extends FunSuite {
     val proposal = new ProposedCombination(List(Color.RED, Color.BLUE, Color.GREEN, Color.PINK))
     val secret = new SecretCombination(List(Color.BLUE, Color.RED, Color.PINK, Color.GREEN))
     assert(
-      proposal.getResult(secret) match {
-        case (blacks, whites) => blacks == 0 && whites == 4
-      }
+      proposal.getResult(secret) == (0, 4)
     )
   }
 
@@ -36,9 +30,7 @@ class ProposedCombinationTest extends FunSuite {
     val proposal = new ProposedCombination(List(Color.BLUE, Color.BLUE, Color.BLUE, Color.BLUE))
     val secret = new SecretCombination(List(Color.RED, Color.RED, Color.RED, Color.RED))
     assert(
-      proposal.getResult(secret) match {
-        case (blacks, whites) => blacks == 0 && whites == 0
-      }
+      proposal.getResult(secret) == (0, 0)
     )
   }
 
@@ -46,9 +38,7 @@ class ProposedCombinationTest extends FunSuite {
     val proposal = new ProposedCombination(List(Color.RED, Color.BLUE, Color.PINK, Color.RED))
     val secret = new SecretCombination(List(Color.BLUE, Color.RED, Color.PINK, Color.PINK))
     assert(
-      proposal.getResult(secret) match {
-        case (blacks, whites) => blacks == 1 && whites == 3
-      }
+      proposal.getResult(secret) == (1, 2)
     )
   }
 }

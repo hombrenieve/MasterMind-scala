@@ -1,6 +1,4 @@
-class ProposedCombination(combination: List[Color.Color]) {
-
-  private val combination_ = combination
+class ProposedCombination(val combination: List[Color.Color]) {
 
   private object Success extends Enumeration {
     type Success = Value
@@ -8,30 +6,30 @@ class ProposedCombination(combination: List[Color.Color]) {
   }
 
   def getResult(secret: SecretCombination): (Int, Int) = {
-    val blacksResult = calculateBlacksResult(combination_, secret.secret)
-    val result = calculateWhitesResult(combination_, secret.secret, blacksResult)
+    val blacksResult = calculateBlacksResult(combination, secret.secret)
+    val result = calculateWhitesResult(combination, secret.secret, blacksResult)
     (result.filter(_ == Success.BLACK).foldLeft(0) { (count, _) => count + 1 },
       result.filter(_ == Success.WHITE).foldLeft(0) { (count, _) => count + 1 })
   }
 
   private def calculateBlacksResult(combination: List[Color.Color], secret: List[Color.Color]): List[Success.Success] = {
     require(combination.size == secret.size)
-    (secret, combination) match {
-      case (hs :: Nil, hc :: Nil) if hs == hc => List(Success.BLACK)
-      case (_ :: Nil, _ :: Nil) => List(Success.EMPTY)
-      case (hs :: ts, hc :: tc) if hs == hc => Success.BLACK :: calculateBlacksResult(ts, tc)
-      case (_ :: ts, _ :: tc) => Success.EMPTY :: calculateBlacksResult(ts, tc)
-    }
+    val combinationAndSecret = combination.zip(secret)
+    combinationAndSecret.map(item =>
+      item match {
+        case (combItem, secrItem) if combItem == secrItem => Success.BLACK
+        case _ => Success.EMPTY
+    })
   }
 
   private def markWhites(color: Color.Color, secret: List[Color.Color], result: List[Success.Success]): List[Success.Success] = {
     require(secret.size == result.size)
-    (secret, result) match {
-      case (hs :: Nil, hr :: Nil) if hs == color && hr == Success.EMPTY => List(Success.WHITE)
-      case (_ :: Nil, hr :: Nil) => List(hr)
-      case (hs :: ts, hr :: tr) if hs == color && hr == Success.EMPTY => Success.WHITE :: markWhites(color, ts, tr)
-      case (_ :: ts, hr :: tr) => hr :: markWhites(color, ts, tr)
-    }
+    val secretAndPrevResult = secret.zip(result)
+    secretAndPrevResult.map(item =>
+      item match {
+        case (secretItem, resultItem) if secretItem == color && resultItem == Success.EMPTY => Success.WHITE
+        case (_, resultItem) => resultItem
+    })
   }
 
   @scala.annotation.tailrec
