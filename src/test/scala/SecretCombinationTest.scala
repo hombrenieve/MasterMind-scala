@@ -8,8 +8,13 @@ class SecretCombinationTest extends FunSuite {
     assert(secret.secret == forcedSecret)
   }
 
-  test("Not forced secret is different") {
-    val secret = new SecretCombination(dimension = forcedSecret.size)
+  test("Forced secret is the same regardless of the size") {
+    val secret = new SecretCombination(forcedSecret, dimension = forcedSecret.size+5)
+    assert(secret.secret == forcedSecret)
+  }
+
+  test("Not forced secret is different in size") {
+    val secret = new SecretCombination(dimension = forcedSecret.size+5)
     assert(secret.secret != forcedSecret)
   }
 
