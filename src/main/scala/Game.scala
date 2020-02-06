@@ -10,7 +10,7 @@ class Game(secret: SecretCombination, combinations: List[ProposedCombination]) {
   val proposedCombinations = combinations
 
   def isWinner = result match {
-    case (_, whites) => whites == Game.DIMENSION
+    case (blacks, _) => blacks == Game.DIMENSION
     case _ => false
   }
 
@@ -18,7 +18,9 @@ class Game(secret: SecretCombination, combinations: List[ProposedCombination]) {
 
   def turn = combinations.size
 
-  def propose(proposal: ProposedCombination): Game =
+  def propose(proposal: ProposedCombination): Game = {
+    require(proposal.combination.size == Game.DIMENSION)
     new Game(secret, proposal :: combinations)
+  }
 
 }
