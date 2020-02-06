@@ -1,7 +1,7 @@
 class SecretCombination(forcedSecret: List[Color.Color] = Nil, dimension: Int = 4) {
 
   private def getRandomSecret() =
-    List(Color.RED, Color.RED, Color.RED, Color.RED)
+    (0 until dimension).map(_ => Color.random).toList
 
   val secret =
     forcedSecret match {
