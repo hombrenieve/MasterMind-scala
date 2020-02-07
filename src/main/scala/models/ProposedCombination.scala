@@ -2,16 +2,19 @@ package models
 
 import scala.annotation.tailrec
 
-class ProposedCombination(val combination: List[Color.Color]) {
+class ProposedCombination(val combination: List[Color.Color], secret: List[Color.Color]) {
+  require(combination.size == secret.size)
 
   private object Success extends Enumeration {
     type Success = Value
     val EMPTY, WHITE, BLACK = Value
   }
 
-  def getResult(secret: SecretCombination): (Int, Int) = {
-    val blacksResult = calculateBlacksResult(combination, secret.secret)
-    val result = calculateWhitesResult(combination, secret.secret, blacksResult)
+  val result = getResult
+
+  private def getResult: (Int, Int) = {
+    val blacksResult = calculateBlacksResult(combination, secret)
+    val result = calculateWhitesResult(combination, secret, blacksResult)
     (result.filter(_ == Success.BLACK).foldLeft(0) { (count, _) => count + 1 },
       result.filter(_ == Success.WHITE).foldLeft(0) { (count, _) => count + 1 })
   }

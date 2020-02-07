@@ -6,23 +6,20 @@ object Game {
 }
 
 
-class Game(secret: SecretCombination, combinations: List[ProposedCombination]) {
+class Game(val secret: SecretCombination, val proposedCombinations: List[ProposedCombination]) {
 
-  private val result = combinations.head.getResult(secret)
-  val proposedCombinations = combinations
-
-  def isWinner = result match {
+  def isWinner = proposedCombinations.head.result match {
     case (blacks, _) => blacks == Game.DIMENSION
     case _ => false
   }
 
   def isLost = this.turn == Game.MAX_TURN
 
-  def turn = combinations.size
+  def turn = proposedCombinations.size
 
   def propose(proposal: ProposedCombination): Game = {
     require(proposal.combination.size == Game.DIMENSION)
-    new Game(secret, proposal :: combinations)
+    new Game(secret, proposal :: proposedCombinations)
   }
 
 }
