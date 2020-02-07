@@ -1,3 +1,5 @@
+package models
+
 import org.scalatest.FunSuite
 
 class GameTest extends FunSuite {
@@ -6,6 +8,7 @@ class GameTest extends FunSuite {
     val forcedSecret = List(Color.ORANGE, Color.BLUE, Color.RED, Color.PINK)
     val game = new Game(new SecretCombination(forcedSecret), List(new ProposedCombination(forcedSecret)))
     assert(game.isWinner)
+    assert(!game.isLost)
   }
 
   test("After several attempts last is winner") {
@@ -17,6 +20,7 @@ class GameTest extends FunSuite {
     )
     val game = new Game(new SecretCombination(forcedSecret), combinations)
     assert(game.isWinner)
+    assert(!game.isLost)
   }
 
   test("After several attempts is lost") {
@@ -25,6 +29,7 @@ class GameTest extends FunSuite {
     val combinations = (1 to Game.MAX_TURN).map(_ => new ProposedCombination(incorrect)).toList
     val game = new Game(new SecretCombination(forcedSecret), combinations)
     assert(game.isLost)
+    assert(!game.isWinner)
   }
 
 }

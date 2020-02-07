@@ -1,3 +1,5 @@
+package models
+
 import scala.annotation.tailrec
 
 class ProposedCombination(val combination: List[Color.Color]) {

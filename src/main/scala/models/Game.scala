@@ -1,3 +1,5 @@
+package models
+
 object Game {
   val DIMENSION = 4
   val MAX_TURN = 10

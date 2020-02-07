@@ -1,3 +1,5 @@
+package models
+
 class SecretCombination(forcedSecret: List[Color.Color] = Nil, dimension: Int = 4) {
 
   private def getRandomSecret() =
