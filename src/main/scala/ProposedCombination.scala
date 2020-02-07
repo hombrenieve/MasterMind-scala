@@ -24,21 +24,18 @@ class ProposedCombination(val combination: List[Color.Color]) {
 
   private def markWhites(color: Color.Color, secret: List[Color.Color], result: List[Success.Success]): List[Success.Success] = {
     require(secret.size == result.size)
-    val secretAndPrevResult = secret.zip(result)
-    secretAndPrevResult.map(item =>
-      item match {
-        case (secretItem, resultItem) if secretItem == color && resultItem == Success.EMPTY => Success.WHITE
-        case (_, resultItem) => resultItem
-    })
+    (secret, result) match {
+      case (hs :: Nil, Success.EMPTY :: Nil) if hs == color => List(Success.WHITE)
+      case (_ :: Nil, hr :: Nil) => List(hr)
+      case (hs :: _, Success.EMPTY :: tr) if hs == color => Success.WHITE :: tr
+      case (_ :: ts, hr :: tr) => hr :: markWhites(color, ts, tr)
+    }
   }
 
-  @scala.annotation.tailrec
   private def calculateWhitesResult(combination: List[Color.Color], secret: List[Color.Color], result: List[Success.Success]): List[Success.Success] = {
-    require(secret.size == result.size)
-    combination match {
-      case hc :: Nil => markWhites(hc, secret, result)
-      case hc :: tc => calculateWhitesResult(tc, secret, markWhites(hc, secret, result))
-    }
+    require(combination.size == result.size)
+    val combinationsLeft = combination.zip(result).filter(item => item._2 == Success.EMPTY).map(item => item._1)
+    combinationsLeft.foldLeft(result)((prevResult, color) => markWhites(color, secret, prevResult))
   }
 
 
