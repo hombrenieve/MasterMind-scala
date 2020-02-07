@@ -22,6 +22,7 @@ class ProposedCombinationTest extends FunSuite {
 
   test("Proposal is correct but not in order") {
     val secret = new SecretCombination(List(Color.BLUE, Color.RED, Color.PINK, Color.GREEN))
+    println()
     val proposal = new ProposedCombination(List(Color.RED, Color.BLUE, Color.GREEN, Color.PINK), secret.secret)
     assert(
       proposal.result == (0, 4)
