@@ -6,12 +6,16 @@ object Game {
 }
 
 
-class Game(val secret: SecretCombination, val proposedCombinations: List[ProposedCombination]) {
+class Game(val secret: SecretCombination, val proposedCombinations: List[ProposedCombination] = Nil) {
 
-  def isWinner = proposedCombinations.head.result match {
-    case (blacks, _) => blacks == Game.DIMENSION
-    case _ => false
-  }
+  def isWinner: Boolean =
+    proposedCombinations match {
+      case Nil => false
+      case h :: _ => h.result match {
+        case (blacks, _) => blacks == Game.DIMENSION
+        case _ => false
+      }
+    }
 
   def isLost = this.turn == Game.MAX_TURN
 
