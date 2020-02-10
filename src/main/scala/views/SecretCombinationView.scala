@@ -8,13 +8,8 @@ object SecretCombinationView {
     GestorIO.writeln("")
   }
 
-  def writeClear(secret: SecretCombination) = {
-    GestorIO.write("( ")
-    secret.secret.foreach(item => {
-      ColorView.write(item)
-      GestorIO.write(" ")
-    })
-    GestorIO.write(")")
+  def writeClear(secret: SecretCombination): Unit = {
+    GestorIO.write(secret.secret)
   }
 
 }

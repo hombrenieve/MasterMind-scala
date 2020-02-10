@@ -32,4 +32,18 @@ class GameTest extends FunSuite {
     assert(!game.isWinner)
   }
 
+  test("Game is win after propose") {
+    val forcedSecret = List(Color.ORANGE, Color.BLUE, Color.BLUE, Color.PINK)
+    val combinations = List(
+      new ProposedCombination(List(Color.ORANGE, Color.RED, Color.BLUE, Color.PINK), forcedSecret),
+      new ProposedCombination(List(Color.YELLOW, Color.RED, Color.BLUE, Color.PINK), forcedSecret),
+    )
+    val game = new Game(new SecretCombination(forcedSecret), combinations)
+    assert(!game.isWinner)
+    assert(!game.isLost)
+    val gameWon = game.propose(forcedSecret)
+    assert(!gameWon.isLost)
+    assert(gameWon.isWinner)
+  }
+
 }

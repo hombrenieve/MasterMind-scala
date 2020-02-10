@@ -6,7 +6,7 @@ object Main {
   def play(game: Game): Boolean = {
     GameView.write(game)
     if(!game.isWinner && !game.isLost)
-      play(game.propose(ProposedCombinationView.read(game.secret)))
+      play(game.propose(ProposedCombinationView.read()))
     else
       game.isWinner
   }

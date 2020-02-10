@@ -17,13 +17,13 @@ class Game(val secret: SecretCombination, val proposedCombinations: List[Propose
       }
     }
 
-  def isLost = this.turn == Game.MAX_TURN
+  def isLost = this.turn-1 == Game.MAX_TURN
 
-  def turn = proposedCombinations.size
+  def turn = proposedCombinations.size+1
 
-  def propose(proposal: ProposedCombination): Game = {
-    require(proposal.combination.size == Game.DIMENSION)
-    new Game(secret, proposal :: proposedCombinations)
+  def propose(proposal: List[Color.Color]): Game = {
+    require(proposal.size == Game.DIMENSION)
+    new Game(secret, new ProposedCombination(proposal, secret.secret) :: proposedCombinations)
   }
 
 }
