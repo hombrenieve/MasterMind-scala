@@ -1,5 +1,9 @@
 package views
 
+import models.Color
+
+import scala.io.StdIn
+
 object GestorIO {
 
   def write[A](string:A):Unit =
@@ -15,5 +19,11 @@ object GestorIO {
     })
     print(")")
   }
+
+  def readLine(title: String): String = {
+    write(title)
+    StdIn.readLine()
+  }
+
 
 }

@@ -13,6 +13,6 @@ object Main {
 
   def main(args: Array[String]): Unit = {
     GestorIO.writeln("Welcome to MasterMind in Scala")
-    play(new Game(new SecretCombination))
+    play(new Game(new SecretCombination(dimension = Game.DIMENSION)))
   }
 }

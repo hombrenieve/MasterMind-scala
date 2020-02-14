@@ -4,8 +4,7 @@ import models.SecretCombination
 
 object SecretCombinationView {
   def write(secret: SecretCombination): Unit = {
-    secret.secret.foreach(_ => GestorIO.write("* "))
-    GestorIO.writeln("")
+    GestorIO.write(secret.secret.map(_ => '*'))
   }
 
   def writeClear(secret: SecretCombination): Unit = {
